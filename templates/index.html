@@ -1,0 +1,97 @@
+
+{% extends 'base.html' %}
+{% block title %}Blog Main Page {% endblock %}
+{% block content %}        
+<div class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-touch="true"  data-bs-ride="carousel" width="1240" height="460">
+        <div class="carousel-inner">
+          <div class="carousel-item active" width="1240" height="460">
+            <img src="media/uploads/ToniRossi.jpg" class="d-block w-100" width="1240" height="460" alt="...">
+          </div>
+          <!-- <div class="carousel-item" width="1240" height="460">
+            <img src="https://source.unsplash.com/1240x460/?mobiles" class="d-block w-100" alt="...">
+          </div> -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="container d-flex ">
+      <div class="col-xxl-8 d-flex justify-content-evenly flex-wrap mt-2 ">
+        {% for i in card.object_list %}
+            <div class="card my-3 mx-2 mx-md-1 d-flex flex-column bg-white p-5" >
+              <div class="card-header bg-white d-flex flex-row">
+                <div class="col-xxl-3  img">
+                  <img src="{{ i.img.url }}" class="card-img-top" height="130" width="200" alt="...">
+                </div>
+                <div class="col-xxl-8 card-body">
+                  <h3 class="card-title">{{ i.title }}</h3>                                  
+                </div>
+              </div>
+                <p class="card-text p-3">{{ i.desc|truncatewords:40 }}</p>
+                <a href="{% url 'post_detail' i.slug %}" class="btn btn-primary mx-3 w-25 text-center">View Post</a>
+            </div>
+            
+        {% endfor %}
+       
+        <nav aria-label="...">
+          <ul class="pagination">
+            {% if card.has_previous %}
+            <li class="page-item">
+              <a class="page-link " href="?page={{card.previous_page_number}}">Previous</a>
+            </li>
+            {% endif %}
+            <li class="page-item active" aria-current="page"><a class="page-link" href="#">Page {{card.number}} of {{count}}</a>
+            </li>
+
+            {% if card.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{card.next_page_number}}">Next</a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav> 
+        
+      </div>
+      
+      <aside class="col-xxl-4 mt-2 text-center" width="385" height="auto">
+      <div class="container p-3">
+        <div class="row d-flex flex-column gap-5 p-5">
+          <div class="col">Recent Posts
+            {% for i in recent_post  %}
+            <div class="card my-2 mx-1 mx-md-1 d-flex flex-column bg-white p-1" >
+              <div class="card-header bg-white d-flex flex-row">
+                <div class="col img">
+                  <img src="{{ i.img.url }}"  class="card-img-left" height="50" width="80" alt="...">
+                </div>
+                <div class="col card-body">
+                  <a href="{% url 'post_detail' i.slug %}"><h6 class="card-title" >{{ i.title }}</h6> </a>                                 
+                </div>
+              </div>
+            </div>
+            
+            {% endfor %}               
+          </div>
+          <div class="col">Cloud Tags
+            <div class="tags py-3 d-flex justify-content-evenly align-items-center">
+              {% for t in card_list %}                                                              
+                  <a href=" {% url 'post_tags' t.name %}"><span class="py-2  px-3 bg-black text-white"> {{ t.name }}</span> </a>  
+              {% endfor %} 
+
+                                  
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      </aside>
+    </div>
+   
+{% endblock %}

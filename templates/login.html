@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock %}
+
+
+{% block content %}
+<div class="container my-5">
+    <form action="." method="POST" class="d-flex flex-wrap flex-column">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <div class="controls p-3">
+            <button>Login</button>
+        </div>
+
+        <div class="controls p-3">
+            <h6>Don't have an account <a href="{% url 'signup' %}">Signup Here</a></h6>
+        </div>
+        
+
+    </form>
+</div>
+
+
+{% endblock %}

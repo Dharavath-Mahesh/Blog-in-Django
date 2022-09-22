@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} Search Page {{query}} {% endblock %}
+{% block content %}        
+<div class="container my-5">
+
+    <div class="columns is-multiline mb-6">
+        <div class="column is-12 has-test-centered mt-6 mb-6">
+            <h2 class="is-size-3"> Search for "{{query}}"</h2>
+        </div>
+        {% if cards %}
+            {% for card in cards %}
+            <div class="card my-3 mx-2 mx-md-1 d-flex flex-column bg-white p-5" >
+                <div class="card-header bg-white">
+                    <div class="col  img">
+                        <img src="{{ card.img.url }}" class="card-img-top w-100" height="400" alt="...">
+                    </div>
+                    <div class="col card-body">
+                        <h3 class="card-title">{{ card.title }}</h3>                                  
+                    </div>
+                </div>
+                <p class="card-text p-3">{{ card.desc | safe }}</p>
+    
+            </div>
+            {% endfor %}
+        
+        {% else %}
+        <div class="column is-12 has-test-centered mt-6 mb-6">
+            <h6 class="is-size-3">No search results found for "{{query}}"</h6>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}   

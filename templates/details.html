@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %} Post-Details {% endblock %}
+{% block content %}
+
+        <div class="container d-flex ">
+            <div class="col-xxl-8 d-flex justify-content-evenly flex-wrap mt-2 ">
+                {% for i in post %}
+                    <div class="card my-3 mx-2 mx-md-1 d-flex flex-column bg-white p-5" >
+                        <div class="card-header bg-white">
+                            <div class="col  img">
+                                <img src="{{ i.img.url }}" class="card-img-top w-100" height="400" alt="...">
+                            </div>
+                            <div class="col card-body">
+                                <h3 class="card-title">{{ i.title }}</h3>                                  
+                            </div>
+                        </div>
+                        <p class="card-text p-3">{{ i.desc | safe }}</p>
+
+                        
+                            
+                        {% for j in post %}
+                        <div class="tags d-flex justify-content-evenly align-items-center">
+                            {% for k in j.tags.all %}                           
+                                {% if k %}                                    
+                                    <a href="{% url 'post_tags' k %}"><span class="py-2  px-3 bg-black text-white">{{k}}</span></a>                                   
+                                {% endif %}                           
+                            {% endfor %}
+                        </div>
+                        {% endfor %}                           
+                        
+                    </div>
+                   
+                {% endfor %}
+                
+            </div>
+        
+            <aside class="col-xxl-4 mt-2 text-center" width="385" height="auto">
+              <div class="container p-3">
+                <div class="row d-flex flex-column gap-5 p-5">
+                  <div class="col">Recent Posts
+                    {% for i in recent_post  %}
+                        <div class="card my-2 mx-1 mx-md-1 d-flex flex-column bg-white p-1" >
+                        <div class="card-header bg-white d-flex flex-row">
+                            <div class="col img">
+                            <img src="{{ i.img.url }}"  class="card-img-left" height="50" width="80" alt="...">
+                            </div>
+                            <div class="col card-body">
+                                <a href="{% url 'post_detail' i.slug %}"><h6 class="card-title" >{{ i.title }}</h6> </a>                                
+                            </div>
+                        </div>
+                        </div>
+            
+                    {% endfor %}  
+
+                  </div>
+                  <div class="col ">Cloud Tags
+                    {% for j in post %}
+                        <div class="tags py-3 d-flex justify-content-evenly align-items-center">
+                            {% for k in j.tags.all %}                           
+                                {% if k %}                                    
+                                <a href="{% url 'post_tags' k %}"><span class="py-2  px-3 bg-black text-white">{{k}}</span></a>                                 
+                                {% endif %}                           
+                            {% endfor %}
+                        </div>
+                        {% endfor %}   
+                  </div>
+                  
+                </div>
+              </div>
+            </aside>
+        </div>
+
+{% endblock %}
